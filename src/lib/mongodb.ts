@@ -27,3 +27,4 @@ if (process.env.NODE_ENV === "development") {
 clientPromise.then(() => console.log("✅ MongoDB connected successfully"));
 
 export default clientPromise;
+
