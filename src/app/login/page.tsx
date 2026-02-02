@@ -23,11 +23,11 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 
-interface LoginValues {
-  email: string;
-  password: string;
-}
 
+interface TLoginValues {
+  email: string,
+  password: string
+}
 
 
 export default function LoginPage() {
@@ -37,7 +37,10 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<LoginValues>();
 
-
+  const handleLogin = (data:TLoginValues) =>{
+      console.log(data)
+      
+  }
   
 
 
@@ -72,7 +75,7 @@ export default function LoginPage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form >
+          <form onSubmit={handleSubmit(handleLogin)}>
             <FieldGroup>
               <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
