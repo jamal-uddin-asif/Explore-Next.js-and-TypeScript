@@ -15,6 +15,7 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { setToken } from "@/lib/token";
 // import { setToken } from "@/lib/token";
 import { Eye, EyeOff } from "lucide-react";
 
@@ -37,6 +38,8 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<TLoginValues>();
 
+  const router = useRouter()
+
   const handleLogin = async(data:TLoginValues) =>{
 
       const res = await fetch('/api/auth/login',{
@@ -47,7 +50,12 @@ export default function LoginPage() {
 
       const result = await res.json()
       if(result.token){
+        console.log(result)
         alert('login successful')
+        setToken(result.token)
+        router.push('/')
+      }else{
+        alert('Unauthorized')
       }
   }
   

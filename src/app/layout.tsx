@@ -28,8 +28,8 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* <Header/> */}
-        <p className="bg-emerald-200 p-8 text-black ">Navber</p>
+        <Header/>
+        {/* <p className="bg-emerald-200 p-8 text-black ">Navber</p> */}
         {children}
       </body>
     </html>

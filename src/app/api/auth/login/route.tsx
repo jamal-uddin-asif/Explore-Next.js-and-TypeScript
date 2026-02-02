@@ -60,7 +60,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
         },
       });
 
-      //   client.close(); korte hobe jodi dbConnect file ta use kori
+      // client.close(); korte hobe jodi dbConnect file ta use kori
 
       return res;
     } catch (error) {

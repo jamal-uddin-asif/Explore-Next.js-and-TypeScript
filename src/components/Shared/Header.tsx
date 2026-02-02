@@ -8,9 +8,10 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { getAuthUser } from "@/service/getAuthUser";
-import { logout } from "@/service/logout";
-import { TUser } from "@/types/user";
+import { useAuth } from "@/Hooks/useAuth";
+// import { getAuthUser } from "@/service/getAuthUser";
+// import { logout } from "@/service/logout";
+// import { TUser } from "@/types/user";
 import { Calendar, Menu } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -20,17 +21,19 @@ export default function Header() {
   const router = useRouter();
   const [user, setUser] = useState<TUser | null>(null);
 
+  const {isAuthenticated, logout} = useAuth()
+
   // if using localStorage
   // const { isAuthenticated } = useAuth();
 
   //if using cookies
-  useEffect(() => {
-    const fetchUser = async () => {
-      const user = await getAuthUser();
-      setUser(user);
-    };
-    fetchUser();
-  }, []);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const user = await getAuthUser();
+  //     setUser(user);
+  //   };
+  //   fetchUser();
+  // }, []);
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -69,7 +72,7 @@ export default function Header() {
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
           {menuItems.map((item) => (
-            <Link href={item.url}>
+            <Link    key={item.url} href={item.url}>
               <button
                 key={item.url}
                 className="text-sm font-medium transition-colors hover:text-primary"
@@ -82,9 +85,9 @@ export default function Header() {
 
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center gap-3">
-          {user ? (
+          {isAuthenticated ? (
             <>
-              <div className="text-sm text-muted-foreground">{user.email}</div>
+              <div className="text-sm text-muted-foreground">{user?.email}</div>
               <Button onClick={handleLogoutClick} size="sm">
                 Logout
               </Button>
@@ -123,8 +126,9 @@ export default function Header() {
               {/* Mobile Navigation */}
               <nav className="flex flex-col gap-2">
                 {menuItems.map((item) => (
-                  <Link key={item.url} href={item.url}>
+                  <Link key={item.url}  href={item.url}>
                     <button
+                      key={item.url}
                       className="text-left px-3 py-2 rounded-md hover:bg-accent transition-colors"
                     >
                       {item.title}
@@ -139,9 +143,9 @@ export default function Header() {
                   <>
                     <div className="px-3 py-2 text-sm text-muted-foreground">
                       <div className="font-medium text-foreground">
-                        {user.email}
+                        {user?.email}
                       </div>
-                      <div className="text-xs">{user.email}</div>
+                      <div className="text-xs">{user?.email}</div>
                     </div>
                     <Button
                       onClick={handleLogoutClick}
