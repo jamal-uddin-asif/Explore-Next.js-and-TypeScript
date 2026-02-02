@@ -3,6 +3,6 @@ import clientPromise from "./mongodb";
 
 export async function mongoConnect ():Promise <{client:MongoClient, db:Db}> {
     const client = await clientPromise
-    const db = client.db(process.env.DB_NAME)
+    const db = client.db('next_event_db')
     return {db, client}
 }

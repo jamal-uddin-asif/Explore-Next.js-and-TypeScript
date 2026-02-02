@@ -35,11 +35,20 @@ export default function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginValues>();
+  } = useForm<TLoginValues>();
 
-  const handleLogin = (data:TLoginValues) =>{
-      console.log(data)
-      
+  const handleLogin = async(data:TLoginValues) =>{
+
+      const res = await fetch('/api/auth/login',{
+        method: 'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(data)
+      }) 
+
+      const result = await res.json()
+      if(result.token){
+        alert('login successful')
+      }
   }
   
 
@@ -48,7 +57,7 @@ export default function LoginPage() {
 //   const [showPassword, setShowPassword] = React.useState(false);
 
 //   const onSubmit = async (data: LoginValues) => {
-//     const res = await fetch("/api/login", {
+//     const res = await fetch("/api/auth/login", {
 //       method: "POST",
 //       headers: { "Content-Type": "application/json" },
 //       body: JSON.stringify(data),

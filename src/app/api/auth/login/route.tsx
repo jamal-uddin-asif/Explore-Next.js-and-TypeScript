@@ -10,7 +10,7 @@ if (!JWT_SECRET) {
   throw new Error("JWT SECRET NOT FOUND");
 }
 
-async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
   
     try {
       const { db, client } = await mongoConnect();
@@ -18,6 +18,7 @@ async function POST(req: NextRequest, res: NextResponse) {
 
       // find user
       const user = await db.collection("users").findOne({ email });
+      console.log(user)
 
       if (!user) {
         //   client.close(); korte hobe jodi dbConnect file ta use kori
