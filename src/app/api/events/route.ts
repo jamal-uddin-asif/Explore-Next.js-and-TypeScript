@@ -1,7 +1,7 @@
 import { mongoConnect } from "@/lib/mongoConnect";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-async function GET() {
+export async function GET() {
   try {
     const { db, client } = await mongoConnect();
     const events = await db.collection("events").find().toArray();
@@ -20,8 +20,16 @@ async function GET() {
   } catch (error) {
     console.error(error);
     return NextResponse.json(
-        {error: 'Failed to fetch events'},
-        {status: 500}
-    )
+      { error: "Failed to fetch events" },
+      { status: 500 },
+    );
   }
+}
+
+export async function POST(req: NextRequest) {
+  try {
+    const { db, client } = await mongoConnect();
+    const data =await req.json() 
+
+  } catch (error) {}
 }
