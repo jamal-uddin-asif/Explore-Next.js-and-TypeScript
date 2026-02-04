@@ -1,4 +1,5 @@
 import { mongoConnect } from "@/lib/mongoConnect";
+import { TEvent } from "@/types/event";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET() {
@@ -6,6 +7,7 @@ export async function GET() {
     const { db, client } = await mongoConnect();
     const events = await db.collection("events").find().toArray();
 
+    // front end a _id jhamela korte pare tai eta formatted kora hoiche
     const formattedEvents = events.map((event) => ({
       id: event._id.toString(),
       title: event.title,
@@ -16,7 +18,6 @@ export async function GET() {
     }));
     //   client.close(); korte hobe Response pathanor age jodi dbConnect file ta use kori
     return NextResponse.json(formattedEvents);
-
   } catch (error) {
     console.error(error);
     return NextResponse.json(
@@ -29,7 +30,35 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const { db, client } = await mongoConnect();
-    const data =await req.json() 
+    const data: TEvent = await req.json();
 
-  } catch (error) {}
+    // Basic validation
+    if (!data.title || !data.date || !data.location) {
+      client.close();
+      return NextResponse.json(
+        { error: "Title, date, and location required" },
+        { status: 400 },
+      );
+    }
+
+    const result = await db.collection("events").insertOne({
+      ...data,
+      createdAt: new Date(),
+    });
+
+    if (result.insertedId) {
+      //   client.close(); korte hobe Response pathanor age jodi dbConnect file ta use kori
+      return NextResponse.json({
+        message: "Event created",
+        id: result.insertedId,
+        status: 201,
+      });
+    }
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json(
+      { error: "Failed to create event" },
+      { status: 500 },
+    );
+  }
 }
