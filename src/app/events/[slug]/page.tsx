@@ -13,6 +13,8 @@ export default function EventDetailsPage() {
   const [event, setEvent] = useState<TEvent | null>(null);
   const [loading, setLoading] = useState(true);
 
+  console.log(event)
+
   useEffect(() => {
     if (!eventId) return;
 

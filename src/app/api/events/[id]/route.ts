@@ -8,13 +8,15 @@ export async function GET(
   context: { params: { id: string } },
 ) {
   try {
-    const {id} = context.params;
+    const {id} =await context.params;
 
     const { db, client } = await mongoConnect();
 
     const event = await db
       .collection<TEvent> ("events")
-      .findOne({ _id: new ObjectId(id) });
+      .findOne({_id:new ObjectId(id)});
+
+      console.log(event)
 
       if(!event){
         return NextResponse.json({
