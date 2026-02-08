@@ -44,3 +44,32 @@ export async function GET(
     );
   }
 }
+
+
+export async function PUT(req:NextRequest, context: { params: { id: string }}){
+    try {
+      const {id} = await context.params
+      const data = await req.json()
+      const {db, client} = await mongoConnect()
+
+      const updatedDoc = {
+        $set: data
+      }
+
+      const result = await db.collection('events').updateOne({_id: new ObjectId(id)}, updatedDoc)
+      
+       // client.close();
+
+    if (result.matchedCount === 0) {
+      return NextResponse.json({ error: "Event not found" }, { status: 404 });
+    }
+    return NextResponse.json({ message: "Event updated" });
+
+    } catch (error) {
+      console.error(error);
+    return NextResponse.json(
+      { error: "Failed to update event" },
+      { status: 500 }
+    );
+    }
+}
