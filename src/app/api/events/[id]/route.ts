@@ -73,3 +73,26 @@ export async function PUT(req:NextRequest, context: { params: { id: string }}){
     );
     }
 }
+export async function DELETE(req:NextRequest, context: { params: { id: string }}){
+    try {
+      const {id} = await context.params
+
+      const {db, client} = await mongoConnect()
+
+      const result = await db.collection('events').deleteOne({_id: new ObjectId(id)})
+      
+       // client.close();
+
+    if (result.deletedCount === 0) {
+      return NextResponse.json({ error: "Event was not delete" }, { status: 404 });
+    }
+    return NextResponse.json({ message: "Event deleted" });
+
+    } catch (error) {
+      console.error(error);
+    return NextResponse.json(
+      { error: "Failed to update event" },
+      { status: 500 }
+    );
+    }
+}
