@@ -14,7 +14,7 @@ import { useAuth } from "@/Hooks/useAuth";
 // import { TUser } from "@/types/user";
 import { Calendar, Menu } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function Header() {
@@ -22,6 +22,9 @@ export default function Header() {
   const [user, setUser] = useState<TUser | null>(null);
 
   const {isAuthenticated, logout} = useAuth()
+
+  const pathname = usePathname()
+  console.log(pathname)
 
   // if using localStorage
   // const { isAuthenticated } = useAuth();
@@ -57,6 +60,8 @@ export default function Header() {
     logout();
   };
 
+  if(pathname.startsWith('/dashboard')) return <></>
+  
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container flex h-16 items-center justify-between px-4">
