@@ -23,67 +23,27 @@ const data = {
       url: "#",
       items: [
         {
-          title: "Installation",
-          url: "#",
+          title: "Home",
+          url: "dashboard",
         },
         {
-          title: "Project Structure",
-          url: "#",
+          title: "Overview",
+          url: "overview",
         },
       ],
     },
     {
-      title: "Build Your Application",
+      title: "Event managment",
       url: "#",
       items: [
         {
-          title: "Routing",
-          url: "#",
+          title: "All Events",
+          url: "all-events",
         },
         {
-          title: "Data Fetching",
-          url: "#",
+          title: "Create Event",
+          url: "create-event",
           isActive: true,
-        },
-        {
-          title: "Rendering",
-          url: "#",
-        },
-        {
-          title: "Caching",
-          url: "#",
-        },
-        {
-          title: "Styling",
-          url: "#",
-        },
-        {
-          title: "Optimizing",
-          url: "#",
-        },
-        {
-          title: "Configuring",
-          url: "#",
-        },
-        {
-          title: "Testing",
-          url: "#",
-        },
-        {
-          title: "Authentication",
-          url: "#",
-        },
-        {
-          title: "Deploying",
-          url: "#",
-        },
-        {
-          title: "Upgrading",
-          url: "#",
-        },
-        {
-          title: "Examples",
-          url: "#",
         },
       ],
     },
