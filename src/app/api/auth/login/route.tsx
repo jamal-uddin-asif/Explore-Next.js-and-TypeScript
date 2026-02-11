@@ -16,6 +16,14 @@ export async function POST(req: NextRequest, res: NextResponse) {
       const { db, client } = await mongoConnect();
       const { email, password } = await req.json();
 
+        if (!email || !password) {
+      //   client.close();
+      return NextResponse.json(
+        { error: "Email and password are required" },
+        { status: 400 }
+      );
+    }
+
       // find user
       const user = await db.collection("users").findOne({ email });
       console.log(user)
@@ -59,10 +67,23 @@ export async function POST(req: NextRequest, res: NextResponse) {
           role: user.role,
         },
       });
+      
+    // client.close(); korte hobe jodi dbConnect file ta use kori
 
-      // client.close(); korte hobe jodi dbConnect file ta use kori
+       // Set cookie options
+    res.cookies.set({
+      name: "token",
+      value: token,
+      httpOnly: true, // cannot be accessed by JS
+      path: "/", // cookie valid for all routes
+      maxAge: 60 * 60 * 24, // 1 day in seconds
+      sameSite: "strict", // security
+      secure: process.env.NODE_ENV === "production",
+    });
 
+  
       return res;
+
     } catch (error) {
       console.error(error);
       return NextResponse.json(
