@@ -10,7 +10,7 @@ if (!JWT_SECRET) {
   throw new Error("JWT SECRET NOT FOUND");
 }
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextRequest) {
   
     try {
       const { db, client } = await mongoConnect();
