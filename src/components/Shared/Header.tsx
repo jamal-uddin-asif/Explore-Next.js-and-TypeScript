@@ -9,9 +9,9 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useAuth } from "@/Hooks/useAuth";
-// import { getAuthUser } from "@/service/getAuthUser";
-// import { logout } from "@/service/logout";
-// import { TUser } from "@/types/user";
+import { getAuthUser } from "@/service/getAuthUser";
+import { TUser } from "@/types/user";
+import { logout } from "@/service/logout";
 import { Calendar, Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -21,7 +21,7 @@ export default function Header() {
   const router = useRouter();
   const [user, setUser] = useState<TUser | null>(null);
 
-  const {isAuthenticated, logout} = useAuth()
+  const {isAuthenticated} = useAuth()
 
   const pathname = usePathname()
   console.log(pathname)
@@ -30,13 +30,13 @@ export default function Header() {
   // const { isAuthenticated } = useAuth();
 
   //if using cookies
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const user = await getAuthUser();
-  //     setUser(user);
-  //   };
-  //   fetchUser();
-  // }, []);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const user = await getAuthUser();
+      setUser(user);
+    };
+    fetchUser();
+  }, []);
 
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -90,7 +90,7 @@ export default function Header() {
 
         {/* Desktop Auth Buttons */}
         <div className="hidden md:flex items-center gap-3">
-          {isAuthenticated ? (
+          {user ? (
             <>
               <div className="text-sm text-muted-foreground">{user?.email}</div>
               <Button onClick={handleLogoutClick} size="sm">
