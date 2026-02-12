@@ -1,15 +1,22 @@
-import NextAuth from "next-auth"
-import GithubProvider from "next-auth/providers/github"
+import NextAuth, { NextAuthOptions } from "next-auth"
+import GoogleProvider from "next-auth/providers/google";
 
-export const authOptions = {
+if (!process.env.GOOGLE_CLIENT_ID || !process.env.GOOGLE_CLIENT_SECRET) {
+  throw new Error("Missing Google OAuth credentials");
+}
+
+export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
+   GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     // ...add more providers here
   ],
-}
+  secret: process.env.NEXTAUTH_SECRET,
 
-export default NextAuth(authOptions)
+}
+const handler = NextAuth(authOptions)
+export {handler as GET, handler as POST}
+
