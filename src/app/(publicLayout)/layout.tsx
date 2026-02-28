@@ -24,15 +24,15 @@ export const metadata: Metadata = {
 
 const PublicLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-      <Provider>
     <html lang="en">
         <body className="antialiased">
+      <Provider>
           <Header />
           {children}
           <Footer />
+      </Provider>
         </body>
     </html>
-      </Provider>
   );
 };
 
