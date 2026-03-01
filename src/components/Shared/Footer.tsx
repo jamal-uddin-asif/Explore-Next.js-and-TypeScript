@@ -51,8 +51,6 @@ const footerSections = [
 
 export default function Footer() {
 
-  // const pathname = usePathname()
-  // if(pathname.startsWith('/dashboard')) return <></>
   
   return (
     <div className="flex flex-col">
