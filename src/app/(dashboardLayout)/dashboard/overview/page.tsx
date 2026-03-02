@@ -6,9 +6,6 @@ import { redirect } from "next/navigation";
 export default async function DashboardOverviewPage() {
 //   const user = await getAuthUser();
 
-//   if (!user) {
-//     redirect("/login");
-//   }
 
   const stats = {
     totalEvents: 12,
