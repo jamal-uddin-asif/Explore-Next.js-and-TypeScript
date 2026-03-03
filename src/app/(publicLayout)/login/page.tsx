@@ -60,26 +60,6 @@ export default function LoginPage() {
   }
   
 
-//   const router = useRouter();
-//   const [showPassword, setShowPassword] = React.useState(false);
-
-//   const onSubmit = async (data: LoginValues) => {
-//     const res = await fetch("/api/auth/login", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify(data),
-//     });
-
-//     const result = await res.json();
-
-//     if (result.token) {
-//       setToken(result.token);
-//       alert("Login successful!");
-//       router.push("/");
-//     } else {
-//       alert(result.error || "Login failed");
-//     }
-//   };
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
